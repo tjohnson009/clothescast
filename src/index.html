@@ -8,25 +8,57 @@
 </head>
 <body>
     <div id='container' class="container">
-        <label for="searchbar"><input id='searchbar' type="text" placeholder="Search for a city..."><button id='search' type="submit">Search</button></label>
+        <div class="searchDiv">
+            <input id='searchField' type="text" placeholder='Search for "city", "city, state" or "country"'>
+            <button id='search-button' type="submit"></button>
+        </div>
         <div id="data">
-            <div class="main-info">
-                <div class="temperature">
+            <div class="city-info">
+                <div class="city-name">
 
                 </div>
+                <div class="city-datetime">
+                    <div class="city-date"></div>
+                    <div class="city-time"></div>
+                </div>
+            </div>
+            <div class="main-info">
+                <div class="temp">
+                    <div class="temp-icon"></div>
+                    <div class="temp-num"></div>
+                    <div class="temp-description"></div>
+                </div>
                 <div class="clothing">
-
+                    <div class="clothing shirt"></div>
+                    <div class="clothing shorts"></div>
+                    <div class="clothing shoes"></div>
+                    <div class="clothing umbrella"></div>
                 </div>
             </div>
             <div class="secondary-info">
+                <div class="secondary feelslike"></div>
+                <div class="secondary humidity"></div>
+                <div class="secondary cloudcover"></div>
+                <div class="secondary uvindex"></div>
+                <div class="secondary wind"></div>
+                <div class="secondary precip"></div>
+                <div class="secondary precipprob"></div>
+                <div class="secondary visibility"></div>
+                <div class="secondary pressure"></div>
+                <div class="secondary moonphase"></div>
+                <div class="conditionals hidden">
+                    <div class="secondary snow"></div>
+                    <div class="secondary snowdepth"></div>
+                    <div class="secondary"></div>
 
+                </div>
             </div>
             <div class="forecast">
 
             </div>
-            <div class="news">
+            <!-- <div class="news">
 
-            </div>
+            </div> -->
         </div>
     </div>
     <script src="../src/index.js"></script>
