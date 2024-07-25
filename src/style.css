@@ -5,3 +5,8 @@
 :root {
     font-size: 10px;
 }
+
+#container {
+    border: 1px solid blue; 
+    background-color: burlywood;
+}
