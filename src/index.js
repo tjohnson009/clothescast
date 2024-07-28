@@ -31,19 +31,16 @@
 class WeatherApp {
   constructor(element) {
     this.element = element;
-    this.dataElement = document.querySelector("#data");
+    this.dataContainer = document.querySelector("#data-container");
     this.cityInput = document.querySelector("#searchField");
     this.searchButton = document.querySelector("#search-button");
-    this.cityDiv = document.querySelector(".city-info");
-    this.mainInfoDiv = document.querySelector(".main-info");
-    this.secondaryInfoDiv = document.querySelector(".secondary-info");
-    this.forecastDiv = document.querySelector(".forecast");
+
 
     this.element.addEventListener("keydown", (e) => {
       this.handleKeyDown(e);
     });
     this.searchButton.addEventListener("click", (e) => {
-      userInterface.clearCityData();
+      userInterface.clearPreviousData();
       this.getWeather();
     });
   }
@@ -72,7 +69,7 @@ class WeatherApp {
 
   handleKeyDown(e) {
     if (e.key === "Enter" && this.cityInput.value.length >= 3) {
-      userInterface.clearCityData();
+      userInterface.clearPreviousData();
       this.getWeather();
     } else {
       return;
@@ -80,19 +77,91 @@ class WeatherApp {
   }
 }
 
+class Converter {
+  constructor() {
+
+  }
+
+  // convert c to f
+
+  // convert f to c
+
+  // convert mph to kmh
+
+  // convert kmh to mph
+
+  // convert pressure
+
+  // convert inches to centimeters
+
+  // convert centimeters to inches
+}
+
 class UI {
   constructor(app) {
     this.app = app;
+    //main divs
+    this.cityDiv = document.querySelector(".city-info");
+    this.mainInfoDiv = document.querySelector(".main-info");
+    this.secondaryInfoDiv = document.querySelector(".secondary-info");
+    this.forecastDiv = document.querySelector(".forecast");
+    this.searchField = document.querySelector('#searchField'); 
+
+    // children of main divs
+    this.cityName = document.querySelector(".city-name");
+    this.cityDate = document.querySelector(".city-date");
+    this.tempIcon = document.querySelector(".temp-icon");
+    this.tempNum = document.querySelector(".temp-num");
+    this.tempDescriptions = document.querySelector(".temp-descriptions");
+    this.shirtDiv = document.querySelector(".shirt");
+    this.shortsDiv = document.querySelector(".shorts");
+    this.shoesDiv = document.querySelector(".shoes");
+    this.umbrellaDiv = document.querySelector(".umbrella");
+
+    // all the lowest level divs where we directly inject content
+    this.datapointDivs = Array.from(document.querySelectorAll('.datapoint')); 
+  }
+
+  updateSecondaryWeatherInfo() {
+
+  }
+
+  fillDatapoints(data) {
+    for (let datapoint in data.currentConditions) {
+      // if (this.datapointDivs.some(div => div.classList.includes(datapoint))) {
+        // }
+        // console.log(datapoint); 
+        let div = this.datapointDivs.find(div => Array.from(div.classList).includes(datapoint)); 
+        if (div) {
+          // console.log(div); 
+          div.innerHTML = data.currentConditions[datapoint]; 
+        }
+    }
+
+    for (let datapoint in data) {
+        let div = this.datapointDivs.find(div => Array.from(div.classList).includes(datapoint)); 
+        if (div) {
+          // console.log(div); 
+          div.innerHTML = data[datapoint];  
+        }
+    }
   }
 
   updateUI(data) {
-    this.app.dataElement.insertAdjacentHTML("beforeend",`${data.resolvedAddress.toUpperCase()}: ${JSON.stringify(data.currentConditions.temp)}`);
+    // console.log(this.datapointDivs); 
+    this.fillDatapoints(data); 
+    // this.app.dataContainer.insertAdjacentHTML("beforeend",`${data.resolvedAddress.toUpperCase()}: ${JSON.stringify(data.currentConditions.temp)}`);
+    this.searchField.value = data.resolvedAddress; 
   }
 
-  clearCityData() {
-    this.app.dataElement.innerHTML = "";
+  clearPreviousData() {
+    this.datapointDivs.forEach(div => {
+      div.innerHTML = ''; 
+    })
   }
 }
 
 const app = new WeatherApp(document.querySelector("#container"));
 const userInterface = new UI(app);
+app.cityInput.value = 'Saint Cloud, FL'; 
+app.getWeather(); 
