@@ -1,32 +1,9 @@
-// const dotenv = require('dotenv');
-// dotenv.config();
-// https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/[location]/[date1]/[date2]?key=YOUR_API_KEY
-// const dataElement = document.querySelector('#data');
-// const cityInput = document.querySelector('#searchbar');
-// const searchButton = document.querySelector('#search');
-
-// async function getWeather() {
-//     let cityValue = cityInput.value;
-//     console.log(process.env);
-//     const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${cityValue}?key=${process.env.API_KEY}`);
-//     let weatherData = await response.json();
-//     console.log(weatherData, typeof weatherData);
-//     dataElement.insertAdjacentHTML('beforeend', `${weatherData.resolvedAddress.toUpperCase()}: ${JSON.stringify(weatherData.currentConditions.temp)}`);
-// }
-
-// function clearCityData() {
-//     dataElement.innerHTML = '';
-// }
-
-// getWeather();
-// searchButton.addEventListener('click', (e) => {
-//     clearCityData();
-//     getWeather();
-// })
-
-// window.addEventListener('keydown', (e) => {
-//     // console.log(e)
-// })
+import { format } from "date-fns"; 
+// const datefns = require('date-fns'); 
+// import { format } from "https://unpkg.com/date-fns/format.mjs";
+// const datefns = require("date-fns"); 
+import setForecastDivs from './forecast.js'; 
+// const setForecastDivs = require('./forecast.js'); 
 
 class WeatherApp {
   constructor(element) {
@@ -55,13 +32,14 @@ class WeatherApp {
       console.log(response);
       if (response.status === 200) {
         let weatherData = await response.json();
-        console.log(weatherData, typeof weatherData);
+        console.log('weather data', weatherData, typeof weatherData);
         userInterface.updateUI(weatherData);
       } else {
-        throw new Error(await response.json());
+        // throw new Error(await response.json());
       }
     } catch (err) {
-      console.log(err);
+      // console.log('LINE 39'); 
+      console.log('Error', err);
       // call UI update
       return;
     }
@@ -109,7 +87,8 @@ class UI {
 
     // children of main divs
     this.cityName = document.querySelector(".city-name");
-    this.cityDate = document.querySelector(".city-date");
+    this.cityDate = document.querySelector("#city-date");
+    this.cityTime = document.querySelector("#city-time");
     this.tempIcon = document.querySelector(".temp-icon");
     this.tempNum = document.querySelector(".temp-num");
     this.tempDescriptions = document.querySelector(".temp-descriptions");
@@ -122,11 +101,7 @@ class UI {
     this.datapointDivs = Array.from(document.querySelectorAll('.datapoint')); 
   }
 
-  updateSecondaryWeatherInfo() {
-
-  }
-
-  fillDatapoints(data) {
+  fillSecondaryDatapoints(data) {
     for (let datapoint in data.currentConditions) {
       // if (this.datapointDivs.some(div => div.classList.includes(datapoint))) {
         // }
@@ -149,9 +124,32 @@ class UI {
 
   updateUI(data) {
     // console.log(this.datapointDivs); 
-    this.fillDatapoints(data); 
+    this.updateClothesCast(data); 
+    this.fillSecondaryDatapoints(data); 
+    this.updateMainInfo(data); 
+    setForecastDivs(data); 
     // this.app.dataContainer.insertAdjacentHTML("beforeend",`${data.resolvedAddress.toUpperCase()}: ${JSON.stringify(data.currentConditions.temp)}`);
+  }
+  
+  updateMainInfo(data) {
     this.searchField.value = data.resolvedAddress; 
+    const DATE_MILLISECONDS = data.currentConditions.datetimeEpoch * 1000; 
+    const options = {
+      weekday: 'short',    // EEE
+      year: 'numeric',     // uuuu
+      month: 'long',       // LLLL
+      day: 'numeric',      // do
+      hour12: `${data.tzoffset < -4 && data.tzoffset > -10 ? true : false}`, 
+      timeZone: data.timezone // Specify the desired timezone
+    }
+    console.log(format(new Date(DATE_MILLISECONDS), "EEE  LLLL do, uuu")); 
+    // this.cityDate.innerHTML = format(new Date(DATE_MILLISECONDS), "EEE  LLLL do, uuu"); 
+    this.cityDate.innerHTML = format(new Intl.DateTimeFormat('en-US', options).format(new Date()), "EEE  LLLL do, uuu"); 
+    this.cityTime.innerHTML = new Date(data.currentConditions.datetimeEpoch * 1000); 
+  }
+
+  updateClothesCast(data) {
+
   }
 
   clearPreviousData() {
@@ -165,3 +163,5 @@ const app = new WeatherApp(document.querySelector("#container"));
 const userInterface = new UI(app);
 app.cityInput.value = 'Saint Cloud, FL'; 
 app.getWeather(); 
+// userInterface.updateMainInfo(app.getWeather()); 
+// userInterface.updateMainInfo(); 

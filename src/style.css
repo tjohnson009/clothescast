@@ -1,17 +1,27 @@
+@font-face {
+    font-family: 'Nunito';
+    src: url('../src/fonts/Nunito/Nunito-VariableFont_wght.ttf') format('truetype'), 
+    url('../src/fonts/Nunito/Nunito-Italic-VariableFont_wght.ttf') format('truetype');
+}
+
 * {
     box-sizing: border-box; 
     margin: 0; 
     padding: 0; 
-    font-family: monospace, system-ui;
+    font-family: 'Nunito', system-ui, monospace;
 }
 
 :root {
     font-size: 10px;
+    /* color: whitesmoke;  */
     --blue: rgb(25, 52, 79);
     --gray: #2c2c2c; 
     --red: #913639; 
     --green: #627e75; 
+    --lightblue: #9bb9c5; 
+    --lightgreen: #8ec586; 
     --yellow: #e9c429; 
+    --white: #FFFFF0; 
     --searchbarHeight: 4rem; 
 
         .svg-icon {
@@ -21,12 +31,13 @@
 }
 
 body {
-    background-color: var(--gray);
+    background-color: var(--white);
 }
 
 #container {
     /* border: 1px solid blue;  */
-    background-color: var(--green);
+    /* background-color: var(--green); */
+    background-color: var(--lightblue);
     max-width: 1000px; 
     margin: 0 auto; 
     /* height: 100vh;  */
@@ -175,13 +186,76 @@ body {
             grid-template-rows: 1fr 3fr;
             
             p {
-                border: 1px solid var(--yellow); 
+                text-align: center; 
+                /* border: 1px solid var(--yellow);  */
             }
 
             .secondary-title {
                 margin: 0 auto; 
                 display: flex;
                 justify-content: center; 
+                font-weight: 700;
             }
         }
+}
+
+.svg-icon-small {
+    aspect-ratio: 1;
+    height: 4rem;
+}
+
+.forecast {
+    display: flex; 
+    flex-direction: column;
+    max-width: 75rem;
+    margin: 0 auto; 
+    /* border: 1px solid var(--yellow);  */
+    font-size: 2.25rem;
+
+    .forecast-title {
+        display: flex; 
+        justify-content: center;
+        align-items: center;
+        margin-top: 2rem; 
+        margin-bottom: 2rem; 
+        font-size: 3rem; 
+        font-weight: 700;
+    }
+
+    .day {
+        display: flex; 
+        align-content: center;
+        align-items: center;
+        margin-top: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: .5rem solid var(--white);
+        border-radius: .5rem;
+
+        .day-date {
+            flex: 1.5;
+        }
+
+        .day-icon {
+            display: flex; 
+            flex: 1; 
+            justify-content: center;
+            img {
+                height: 5rem; 
+            }
+        }
+        
+        .day-high {
+            flex: 1; 
+            color: var(--red); 
+        }
+        
+        .day-low {
+            flex: 1; 
+            color: var(--blue); 
+        }
+        .day-wind {
+            flex: 1; 
+            
+        }
+    }
 }
