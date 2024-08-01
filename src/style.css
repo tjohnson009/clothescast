@@ -119,6 +119,7 @@ body {
     font-weight: 600;
     margin: 0 auto; 
     font-weight: 700; 
+    text-align: center; 
 }
 
 .city-datetime {
@@ -289,4 +290,8 @@ body {
             
         }
     }
+}
+
+.error {
+    color: var(--red); 
 }

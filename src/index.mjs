@@ -12,6 +12,7 @@ class WeatherApp {
     this.dataContainer = document.querySelector("#data-container");
     this.cityInput = document.querySelector("#searchField");
     this.searchButton = document.querySelector("#search-button");
+    this.measurement = 'imperial' // or 'metric'
 
     this.element.addEventListener("keydown", (e) => {
       this.handleKeyDown(e);
@@ -35,11 +36,12 @@ class WeatherApp {
         console.log('weather data', weatherData, typeof weatherData);
         userInterface.updateUI(weatherData);
       } else {
-        // throw new Error(await response.json());
+        userInterface.dataUnavailable(); 
+        throw new Error(await response.json());
       }
     } catch (err) {
       // console.log('LINE 39'); 
-      console.log('Error', err);
+      console.error('Error', err);
       // call UI update
       return;
     }
@@ -97,6 +99,7 @@ class UI {
     this.shortsDiv = document.querySelector(".shorts");
     this.shoesDiv = document.querySelector(".shoes");
     this.umbrellaDiv = document.querySelector(".umbrella");
+    this.UVindex = document.querySelector('.uvindex'); 
 
     // all the lowest level divs where we directly inject content
     this.datapointDivs = Array.from(document.querySelectorAll('.datapoint')); 
@@ -121,21 +124,31 @@ class UI {
           div.innerHTML = data[datapoint];  
         }
     }
+
+    // UV Index
+    this.UVindex.innerHTML = `<img src="../src/icons/weather/line/all/uv-index-${data.currentConditions.uvindex}.svg" class="svg-icon" alt=""></img>`; 
+    if (data.currentConditions.uvindex === 0) {
+      this.UVindex.innerHTML = 0; 
+    }
   }
 
   updateUI(data) {
     // console.log(this.datapointDivs); 
-    this.updateClothesCastSection(data); 
     this.fillSecondaryDatapoints(data); 
-    this.updateMainInfo(data); 
-    this.updateClothesCastSection(data); 
+    this.updateMainInfo(data);  
     this.updateTemperatureIcon(data); 
     setForecastDivs(data); 
     updateClothesCast(data); 
     // this.app.dataContainer.insertAdjacentHTML("beforeend",`${data.resolvedAddress.toUpperCase()}: ${JSON.stringify(data.currentConditions.temp)}`);
   }
+
+  dataUnavailable() {
+    this.cityName.innerHTML = `Data unavailable for: ${this.searchField.value}`; 
+    this.cityName.classList.add('error'); 
+  }
   
   updateMainInfo(data) {
+    this.cityName.classList.remove('error'); 
     this.searchField.value = data.resolvedAddress; 
     const DATE_MILLISECONDS = data.currentConditions.datetimeEpoch * 1000; 
     const dateOptions = {
@@ -150,16 +163,13 @@ class UI {
       minute: "2-digit",
       timeZone: data.timezone,
       timeZoneName: "short",
+      hour12: ((data.tzoffset <= -4 && data.tzoffset >= -7) || data.timezone === 'America/Juneau' || data.timezone === 'Pacific/Honolulu' || data.timezone === "America/Adak") ? true : false
     }; 
     // console.log(format(new Date(DATE_MILLISECONDS), "EEE LLLL do, uuu")); 
     // this.cityDate.innerHTML = format(new Date(DATE_MILLISECONDS), "EEE  LLLL do, uuu"); 
     this.cityDate.innerHTML = format(new Intl.DateTimeFormat('en-US', dateOptions).format(new Date()), "EEE LLLL do, uuu"); 
     // this.cityTime.innerHTML = date.datetime;
     this.cityTime.innerHTML = new Intl.DateTimeFormat('en-US', timeOptions).format(Date.now()); 
-  }
-
-  updateClothesCastSection(data) {
-
   }
 
   updateTemperatureIcon(data) {
