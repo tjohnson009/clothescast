@@ -13,6 +13,7 @@ class WeatherApp {
     this.cityInput = document.querySelector("#searchField");
     this.searchButton = document.querySelector("#search-button");
     this.measurement = 'imperial' // or 'metric'
+    
 
     this.element.addEventListener("keydown", (e) => {
       this.handleKeyDown(e);
@@ -63,18 +64,32 @@ class Converter {
   }
 
   // convert c to f
-
+  convertToFahrenhheit(celsius) {
+    return ((celsius* (9/5)) + 32); 
+  }
   // convert f to c
+  convertToC(fahrenheit) {
+    return ((fahrenheit - 32) * (5/9)); 
+  }
 
   // convert mph to kmh
-
+  convertToKM(milesOrMPH) {
+    return (milesOrMPH * 1.609344); 
+  }
   // convert kmh to mph
-
-  // convert pressure
+  convertToMiles(kmOrKMH) {
+    return (kmOrKMH * .621371); 
+  }
 
   // convert inches to centimeters
+  convertToCM(inches) {
+    return (inches * 2.54);
+  }
 
   // convert centimeters to inches
+  convertToInches(cm) {
+    return (cm * .393701);
+  }
 }
 
 class UI {
@@ -86,6 +101,14 @@ class UI {
     this.secondaryInfoDiv = document.querySelector(".secondary-info");
     this.forecastDiv = document.querySelector(".forecast");
     this.searchField = document.querySelector('#searchField'); 
+    this.metricButton = document.querySelector('.settings-metric'); 
+    this.imperialButton = document.querySelector('.settings-imperial'); 
+
+    [this.metricButton, this.imperialButton].forEach(button => {
+      button.addEventListener('click', (e) => {
+        this.switchSettings(); 
+      })
+    })
 
     // children of main divs
     this.cityName = document.querySelector(".city-name");
@@ -100,6 +123,7 @@ class UI {
     this.shoesDiv = document.querySelector(".shoes");
     this.umbrellaDiv = document.querySelector(".umbrella");
     this.UVindex = document.querySelector('.uvindex'); 
+    this.moonDiv = document.querySelector('.moonphase'); 
 
     // all the lowest level divs where we directly inject content
     this.datapointDivs = Array.from(document.querySelectorAll('.datapoint')); 
@@ -130,6 +154,70 @@ class UI {
     if (data.currentConditions.uvindex === 0) {
       this.UVindex.innerHTML = 0; 
     }
+
+    // Moon
+    let moonPhase = data.currentConditions.moonphase;
+
+    if (moonPhase === 0) {
+      // New moon
+      this.moonDiv.innerHTML = `<img src="../src/icons/weather/line/all/moon-new.svg" class="svg-icon" alt="New Moon"></img>`;
+    } else if (moonPhase > 0 && moonPhase < 0.25) {
+      // Waxing crescent
+      this.moonDiv.innerHTML = `<img src="../src/icons/weather/line/all/moon-waxing-crescent.svg" class="svg-icon" alt="Waxing Crescent"></img>`;
+    } else if (moonPhase === 0.25) {
+      // First quarter
+      this.moonDiv.innerHTML = `<img src="../src/icons/weather/line/all/moon-first-quarter.svg" class="svg-icon" alt="First Quarter"></img>`;
+    } else if (moonPhase > 0.25 && moonPhase < 0.5) {
+      // Waxing gibbous
+      this.moonDiv.innerHTML = `<img src="../src/icons/weather/line/all/moon-waxing-gibbous.svg" class="svg-icon" alt="Waxing Gibbous"></img>`;
+    } else if (moonPhase === 0.5) {
+      // Full moon
+      this.moonDiv.innerHTML = `<img src="../src/icons/weather/line/all/moon-full.svg" class="svg-icon" alt="Full Moon"></img>`;
+    } else if (moonPhase > 0.5 && moonPhase < 0.75) {
+      // Waning gibbous
+      this.moonDiv.innerHTML = `<img src="../src/icons/weather/line/all/moon-waning-gibbous.svg" class="svg-icon" alt="Waning Gibbous"></img>`;
+    } else if (moonPhase === 0.75) {
+      // Last quarter
+      this.moonDiv.innerHTML = `<img src="../src/icons/weather/line/all/moon-last-quarter.svg" class="svg-icon" alt="Last Quarter"></img>`;
+    } else if (moonPhase > 0.75 && moonPhase < 1) {
+      // Waning crescent
+      this.moonDiv.innerHTML = `<img src="../src/icons/weather/line/all/moon-waning-crescent.svg" class="svg-icon" alt="Waning Crescent"></img>`;
+    } else {
+      // Default full moon
+      this.moonDiv.innerHTML = `<img src="../src/icons/weather/line/all/moon-full.svg" class="svg-icon" alt="Default Full Moon"></img>`;
+    }
+    
+    // Wind
+
+
+  }
+
+  switchSettings() {
+    let active = document.querySelector('.active'); 
+
+    if (active === this.metricButton) { //switch to imperial
+      let allMetrics = Array.from(document.querySelectorAll('.metric')); 
+      let tempMeasurements = Array.from(document.querySelectorAll('.temperature-measurement'));
+
+      tempMeasurements.forEach(el => {
+        el.innerHTML = '&#8457;'
+      }); 
+
+      allMetrics.forEach(el => {
+        if (el.classList.includes('distance')) {
+          el.innerHTML = 'mi'; 
+        }
+
+        if (el.classList.includes('speed')) {
+          el.innerHTML = 'mph'; 
+        }
+
+        // to convert numbers, it has to have datapoint class and one of the above 2 metrics
+
+      }); 
+    } else if (active === this.imperialButton) {
+
+    }
   }
 
   updateUI(data) {
@@ -137,7 +225,7 @@ class UI {
     this.fillSecondaryDatapoints(data); 
     this.updateMainInfo(data);  
     this.updateTemperatureIcon(data); 
-    setForecastDivs(data); 
+    setForecastDivs(data, this.app); 
     updateClothesCast(data); 
     // this.app.dataContainer.insertAdjacentHTML("beforeend",`${data.resolvedAddress.toUpperCase()}: ${JSON.stringify(data.currentConditions.temp)}`);
   }
@@ -187,10 +275,6 @@ class UI {
     this.tempIconDiv.insertAdjacentHTML('beforeend', imgHTML); 
   }
 
-  // updateForecastSection(data) {
-
-  // }
-
   clearPreviousData() {
     this.datapointDivs.forEach(div => {
       div.innerHTML = ''; 
@@ -203,6 +287,7 @@ class UI {
 
 const app = new WeatherApp(document.querySelector("#container"));
 const userInterface = new UI(app);
+const converter = new Converter(); 
 app.cityInput.value = 'Saint Cloud, FL'; 
 app.getWeather(); 
 // userInterface.updateMainInfo(app.getWeather()); 

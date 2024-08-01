@@ -3,7 +3,7 @@ const updateClothesCast = (data) => {
     let today = data.days[0]; 
     // let element = `<img src="../src/icons/clothes/heavycoat.svg" class="svg-icon" alt="">`; \
     //umbrella
-    if (today.precipprob < 20 && today.precipprob > 0) { // likely rain
+    if (today.precipprob <= 50 && today.precipprob > 20) { // likely rain
         clothingItems[3].innerHTML = `<img src="../src/icons/clothes/closedumbrella.svg" class="svg-icon" alt=""></img>`
     } else if (today.precipprob > 50) {
         clothingItems[3].innerHTML = `<img src="../src/icons/clothes/openumbrella.svg" class="svg-icon" alt=""></img>`;
@@ -33,15 +33,15 @@ const updateClothesCast = (data) => {
     }
 
     //shirt 
-    if (today.precipprob > 50 && today.feelslikeMax < 80) {
+    if (today.precipprob > 50 && today.tempMax < 75) {
         clothingItems[0].innerHTML = `<img src="../src/icons/clothes/lightjacket.svg" class="svg-icon" alt=""></img>`;
     } else if (today.snow || today.tempmin < 50) {
         clothingItems[0].innerHTML = `<img src="../src/icons/clothes/heavycoat.svg" class="svg-icon" alt=""></img>`;
-    } else if (today.precip === 0 && today.feelslikeMax > 90) {
+    } else if (today.precip === 0 && today.tempMax >= 90) {
         clothingItems[0].innerHTML = `<img src="../src/icons/clothes/tanktop.svg" class="svg-icon" alt=""></img>`;
     } else if (today.feelslikeMax < 70) {
         clothingItems[0].innerHTML = `<img src="../src/icons/clothes/longsleeve.svg" class="svg-icon" alt=""></img>`;
-    } else if (today.tempmin < 70) {
+    } else if (today.tempmin < 60) {
         clothingItems[0].innerHTML = `<img src="../src/icons/clothes/lightjacket.svg" class="svg-icon" alt=""></img>`;
     } else {
         clothingItems[0].innerHTML = `<img src="../src/icons/clothes/shortsleeve.svg" class="svg-icon" alt=""></img>`;

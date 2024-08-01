@@ -15,6 +15,10 @@
             <button id='search-button' type="submit"></button>
         </div>
         <div id="data-container">
+            <div class="fahrenheit-celsius-buttons">
+                <button class="settings-metric active">°C, m/s</button>
+                <button class="settings-imperial">°F, mph</button>
+            </div>
             <div class="city-info">
                 <div class="city-name resolvedAddress datapoint">
 
@@ -35,7 +39,7 @@
                     </div>
                     <div class="temp-num">
                         <span class="temp datapoint"></span>
-                        <span class="metric-or-imperial">&#8457;</span>
+                        <span class="imperial temperature-measurement">&#8457;</span>
                     </div>
                         <div class="temp-descriptions datapoint description">
 
@@ -60,7 +64,7 @@
                 <div class="secondary">
                     <p class="secondary-title">Feels Like</p>
                     <p>
-                        <span class='feelslike datapoint imperial'></span> &#8457;
+                        <span class='feelslike datapoint'></span> <span class="imperial temperature-measurement">&#8457;</span>
                     </p>
                 </div>
                 <!-- <div class="secondary metric hidden">
@@ -76,19 +80,19 @@
                 <div class="secondary">
                     <p class="secondary-title">Relative Humidity</p>
                     <p class="datapoint-p">
-                        <span class="humidity datapoint"></span><span class="imperial">%</span>
+                        <span class="humidity datapoint"></span><span class="">%</span>
                     </p>
                 </div>
                 <div class="secondary">
                     <p class="secondary-title">Probability of Rain</p>
                     <p class="datapoint-p">
-                        <span class="datapoint precipprob"></span><span class="imperial">%</span>
+                        <span class="datapoint precipprob"></span><span class="">%</span>
                     </p>
                 </div>
                 <div class="secondary">
                     <p class="secondary-title">Cloud Coverage</p>
                     <p class="datapoint-p">
-                        <span class="datapoint cloudcover"></span><span class="imperial">%</span></p>
+                        <span class="datapoint cloudcover"></span><span class="">%</span></p>
                 </div>
                 <div class="secondary">
                     <p class="secondary-title">UV Index</p>
@@ -98,22 +102,22 @@
                     <p class="secondary-title">Wind Speed and Direction</p>
                     <p class="">
                         <span class="datapoint winddir"></span>
-                        <span class="datapoint windspeed"></span>
+                        <span class="datapoint windspeed"></span><span class="imperial speed">mph</span>
                     </p>
-                </div>
-                <div class="secondary">
-                    <p class="secondary-title">Visibility</p>
-                    <p class="datapoint-p">
-                        <span class="datapoint visibility"></span><span class="metric"> km</span></p>
-                </div>
-                <div class="secondary">
-                    <p class="secondary-title">Pressure</p>
-                    <p >
-                        <span class="datapoint pressure"></span><span class="imperial">mb</span></p>
                 </div>
                 <div class="secondary">
                     <p class="secondary-title">Moon</p>
                     <p class="datapoint moonphase"></p>
+                </div>
+                <div class="secondary">
+                    <p class="secondary-title">Visibility</p>
+                    <p class="datapoint-p">
+                        <span class="datapoint visibility"></span><span class="metric distance"> km</span></p>
+                </div>
+                <div class="secondary">
+                    <p class="secondary-title">Pressure</p>
+                    <p >
+                        <span class="datapoint pressure"></span><span class="">mb</span></p>
                 </div>
                 <div class="secondary">
                     <p class="secondary-title">Longtiude</p>

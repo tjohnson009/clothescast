@@ -277,21 +277,48 @@ body {
         }
         
         .day-high {
-            flex: 1; 
+            flex: .75; 
             color: var(--red); 
         }
         
         .day-low {
-            flex: 1; 
+            flex: .75; 
             color: var(--blue); 
         }
         .day-wind {
-            flex: 1; 
-            
+            display: flex;
+            flex: 1.5;
+            justify-content: end; 
+            gap: 1rem;
         }
     }
 }
 
 .error {
     color: var(--red); 
+}
+
+.fahrenheit-celsius-buttons {
+    position: absolute; 
+    top: 6rem; 
+    right: 2rem; 
+}
+
+[class^='settings-'] {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    margin-left: 8px;
+    background-color: var(--blue);
+    transition: all 0.3s;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px 16px;
+    height: 40px;
+    border-radius: 20px;
+    border: 2px solid var(--blue);
+    color: var(--white);
+}
+
+[class^='settings-']:hover, [class^='settings-'].active {
+    border: 2px solid var(--white);
 }
