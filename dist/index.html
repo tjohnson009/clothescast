@@ -20,20 +20,26 @@
 
                 </div>
                 <div class="city-datetime">
-                    <div id='city-date' class="city-date datapoint"></div>
-                    <div id='city-time' class="city-time datapoint"></div>
+                    <!-- <div id='city-date' class="city-date datapoint"></div>
+                    <div id='city-time' class="city-time datapoint"></div> -->
+                        <span id='city-date' class="city-date datapoint"></span>
+                        <span id='city-time' class="city-time datapoint"></span>
                 </div>
             </div>
             <div class="main-info">
                 <div class="temperature">
-                    <div class="temp-icon datapoint"><img src="../src/icons/weather/line/all/clear-day.svg"
-                            class='svg-icon' alt=""></div>
-                    <div class="temp-num"><span class="temp datapoint"></span><span
-                            class="metric-or-imperial">&#8457;</span></div>
-                    <div class="temp-descriptions">
-                        <div class="datapoint conditions"></div>
-                        <div class="datapoint description"></div>
+                    <div class="datapoint conditions">
+
                     </div>
+                    <div class="temp-icon datapoint">
+                    </div>
+                    <div class="temp-num">
+                        <span class="temp datapoint"></span>
+                        <span class="metric-or-imperial">&#8457;</span>
+                    </div>
+                        <div class="temp-descriptions datapoint description">
+
+                        </div>
                 </div>
                 <div class="clothing">
                     <div class="clothing-item shirt datapoint">
@@ -59,9 +65,21 @@
                     &#8457;
                 </div> -->
                 <div class="secondary">
+                    <p class="secondary-title">Rain</p>
+                    <p class="datapoint-p">
+                        <span class="datapoint precip"></span><span class="imperial"> in</span>
+                    </p>
+                </div>
+                <div class="secondary">
                     <p class="secondary-title">Relative Humidity</p>
                     <p class="datapoint-p">
                         <span class="humidity datapoint"></span><span class="imperial">%</span>
+                    </p>
+                </div>
+                <div class="secondary">
+                    <p class="secondary-title">Probability of Rain</p>
+                    <p class="datapoint-p">
+                        <span class="datapoint precipprob"></span><span class="imperial">%</span>
                     </p>
                 </div>
                 <div class="secondary">
@@ -78,18 +96,6 @@
                     <p class="">
                         <span class="datapoint winddir"></span>
                         <span class="datapoint windspeed"></span>
-                    </p>
-                </div>
-                <div class="secondary">
-                    <p class="secondary-title">Rain</p>
-                    <p class="datapoint-p">
-                        <span class="datapoint precip"></span><span class="imperial"> in</span>
-                    </p>
-                </div>
-                <div class="secondary">
-                    <p class="secondary-title">Probability of Rain</p>
-                    <p class="datapoint-p">
-                        <span class="datapoint precipprob"></span><span class="imperial">%</span>
                     </p>
                 </div>
                 <div class="secondary">

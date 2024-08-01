@@ -3,6 +3,7 @@ import { format } from "date-fns";
 // import { format } from "https://unpkg.com/date-fns/format.mjs";
 // const datefns = require("date-fns"); 
 import setForecastDivs from './forecast.js'; 
+import updateClothesCast from './updateClothesCast.js'; 
 // const setForecastDivs = require('./forecast.js'); 
 
 class WeatherApp {
@@ -11,7 +12,6 @@ class WeatherApp {
     this.dataContainer = document.querySelector("#data-container");
     this.cityInput = document.querySelector("#searchField");
     this.searchButton = document.querySelector("#search-button");
-
 
     this.element.addEventListener("keydown", (e) => {
       this.handleKeyDown(e);
@@ -25,11 +25,11 @@ class WeatherApp {
   async getWeather() {
     // let cityValue = this.cityInput.value;
     try {
-      console.log(this);
+      // console.log(this);
       const response = await fetch(
         `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${this.cityInput.value}?key=${process.env.API_KEY}`
       );
-      console.log(response);
+      // console.log(response);
       if (response.status === 200) {
         let weatherData = await response.json();
         console.log('weather data', weatherData, typeof weatherData);
@@ -89,7 +89,8 @@ class UI {
     this.cityName = document.querySelector(".city-name");
     this.cityDate = document.querySelector("#city-date");
     this.cityTime = document.querySelector("#city-time");
-    this.tempIcon = document.querySelector(".temp-icon");
+    this.tempIcon = document.querySelector("#temp-icon");
+    this.tempIconDiv = document.querySelector(".temp-icon");
     this.tempNum = document.querySelector(".temp-num");
     this.tempDescriptions = document.querySelector(".temp-descriptions");
     this.shirtDiv = document.querySelector(".shirt");
@@ -124,38 +125,69 @@ class UI {
 
   updateUI(data) {
     // console.log(this.datapointDivs); 
-    this.updateClothesCast(data); 
+    this.updateClothesCastSection(data); 
     this.fillSecondaryDatapoints(data); 
     this.updateMainInfo(data); 
+    this.updateClothesCastSection(data); 
+    this.updateTemperatureIcon(data); 
     setForecastDivs(data); 
+    updateClothesCast(data); 
     // this.app.dataContainer.insertAdjacentHTML("beforeend",`${data.resolvedAddress.toUpperCase()}: ${JSON.stringify(data.currentConditions.temp)}`);
   }
   
   updateMainInfo(data) {
     this.searchField.value = data.resolvedAddress; 
     const DATE_MILLISECONDS = data.currentConditions.datetimeEpoch * 1000; 
-    const options = {
-      weekday: 'short',    // EEE
-      year: 'numeric',     // uuuu
-      month: 'long',       // LLLL
-      day: 'numeric',      // do
-      hour12: `${data.tzoffset < -4 && data.tzoffset > -10 ? true : false}`, 
+    const dateOptions = {
+      weekday: 'short',    // Mon
+      year: 'numeric',     // 2024
+      month: 'long',       // August
+      day: 'numeric',      // 1st
       timeZone: data.timezone // Specify the desired timezone
-    }
-    console.log(format(new Date(DATE_MILLISECONDS), "EEE  LLLL do, uuu")); 
+    }; 
+    const timeOptions = {
+      hour: "2-digit",
+      minute: "2-digit",
+      timeZone: data.timezone,
+      timeZoneName: "short",
+    }; 
+    // console.log(format(new Date(DATE_MILLISECONDS), "EEE LLLL do, uuu")); 
     // this.cityDate.innerHTML = format(new Date(DATE_MILLISECONDS), "EEE  LLLL do, uuu"); 
-    this.cityDate.innerHTML = format(new Intl.DateTimeFormat('en-US', options).format(new Date()), "EEE  LLLL do, uuu"); 
-    this.cityTime.innerHTML = new Date(data.currentConditions.datetimeEpoch * 1000); 
+    this.cityDate.innerHTML = format(new Intl.DateTimeFormat('en-US', dateOptions).format(new Date()), "EEE LLLL do, uuu"); 
+    // this.cityTime.innerHTML = date.datetime;
+    this.cityTime.innerHTML = new Intl.DateTimeFormat('en-US', timeOptions).format(Date.now()); 
   }
 
-  updateClothesCast(data) {
+  updateClothesCastSection(data) {
 
   }
+
+  updateTemperatureIcon(data) {
+    let currentTime = new Date(data.currentConditions.datetimeEpoch * 1000); 
+    let currentTimeEpoch = data.currentConditions.datetimeEpoch; 
+    // console.log('currentTime', currentTimeEpoch); 
+    // if daytime - use daytime icons
+    // if (currentTimeEpoch > data.currentConditions.sunriseEpoch || currentTimeEpoch < data.currentConditions.sunsetEpoch) { // daytime
+    let imgHTML = `<img id="temp-icon" src="../src/icons/weather/line/all/${data.currentConditions.icon}.svg" class="svg-icon" alt=""></img>`; 
+      // console.log(this.tempIcon.src); 
+      //nighttime
+    // } else {
+      // this.tempIcon.src = `../src/icons/weather/line/all/clear-day.svg`; 
+    // }
+    this.tempIconDiv.insertAdjacentHTML('beforeend', imgHTML); 
+  }
+
+  // updateForecastSection(data) {
+
+  // }
 
   clearPreviousData() {
     this.datapointDivs.forEach(div => {
       div.innerHTML = ''; 
     })
+
+    // clear forcast divs
+    this.forecastDiv.innerHTML = ''; 
   }
 }
 

@@ -18,31 +18,39 @@
     --gray: #2c2c2c; 
     --red: #913639; 
     --green: #627e75; 
-    --lightblue: #9bb9c5; 
+    --lightblue: rgb(155, 185, 197); 
     --lightgreen: #8ec586; 
     --yellow: #e9c429; 
     --white: #FFFFF0; 
     --searchbarHeight: 4rem; 
+    --blueblack: rgb(0, 5, 233); 
 
         .svg-icon {
             aspect-ratio: 1;
-            height: 20rem; 
+            height: 15rem; 
         }
 }
 
 body {
-    background-color: var(--white);
+    /* background-color: var(--white); */
+    background: linear-gradient(var(--lightblue), var(--green));
+    /* background-attachment: fixed; */
 }
 
 #container {
-    /* border: 1px solid blue;  */
+    /* border: 1px solid rgba(155, 185, 197, .3);  */
     /* background-color: var(--green); */
-    background-color: var(--lightblue);
+    /* background-color: var(--lightblue); */
+    background-color: rgba(155, 185, 197, .3);
+    /* opacity: .7;  */
     max-width: 1000px; 
     margin: 0 auto; 
     /* height: 100vh;  */
     padding: 2rem 0;
-    position: relative; 
+    position: relative;     
+    backdrop-filter: blur(100px); 
+    background-blend-mode: screen; /* Change blend mode as desired */
+    /* Adjust for visual effect */
 }
 
 .searchDiv {
@@ -107,33 +115,46 @@ body {
 }
 
 .city-name {
-    font-size: 3rem; 
+    font-size: 3.5rem; 
     font-weight: 600;
     margin: 0 auto; 
+    font-weight: 700; 
 }
 
 .city-datetime {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 3rem; 
+    /* display: grid; */
+    display: flex;
+    /* grid-template-columns: repeat(2, 1fr); */
+    gap: 2rem; 
     margin: 0 auto; 
-    font-size: 2.5rem; 
+    font-size: 2rem; 
 }
 
 .main-info {
     /* border: 1px solid red;  */
     display: grid; 
     grid-template-columns: repeat(2, 1fr); 
-    aspect-ratio: 1/.5; 
-    max-height: 500px; 
+    /* aspect-ratio: 1/.5;  */
+    max-height: 400px; 
+    column-gap: 3rem; 
+    max-width: 75rem;
+    margin: 0 auto; 
+    margin-bottom: 3rem; 
 }
 
 .temperature {
     display: grid; 
-    grid-template: 1fr 1fr /  1fr 1fr; 
+    grid-template: .25fr 1fr 1fr /  1fr 1fr; 
+    grid-column: 1/2; 
+
+    .conditions {
+        text-align: center;
+        grid-area: 1/1/2/3; 
+        font-size: 4rem;
+    }
 
     .temp-icon {
-        grid-area: 1/1/2/2;
+        grid-area: 2/1/3/2;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -145,17 +166,19 @@ body {
     }
 
     .temp-num {
-        grid-area: 1/2/2/3; 
-        font-size: 5rem; 
+        grid-area: 2/2/3/3; 
+        font-size: 7rem; 
         display: flex; 
         justify-content: center; 
         align-items: center;
+        font-weight: 600; 
     }
 
     .temp-descriptions {
+        text-align: center; 
+        grid-area: 3/1/4/3; 
         /* display: flex;  */
         justify-content: center;
-        grid-area: 2/1/3/3; 
         /* font-size: 300%;  */
         font-size: 3rem; 
     }
@@ -164,6 +187,14 @@ body {
 .clothing {
     display: grid; 
     grid-template: 1fr 1fr /  1fr 1fr; 
+    row-gap: 2rem; 
+    grid-column: 2/3; 
+
+    .clothing-item {
+        display: flex; 
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 .secondary-info {
@@ -207,7 +238,7 @@ body {
 .forecast {
     display: flex; 
     flex-direction: column;
-    max-width: 75rem;
+    max-width: 70rem;
     margin: 0 auto; 
     /* border: 1px solid var(--yellow);  */
     font-size: 2.25rem;
@@ -240,7 +271,7 @@ body {
             flex: 1; 
             justify-content: center;
             img {
-                height: 5rem; 
+                height: 7rem; 
             }
         }
         
