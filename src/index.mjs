@@ -4,6 +4,7 @@ import { format } from "date-fns";
 // const datefns = require("date-fns"); 
 import setForecastDivs from './forecast.js'; 
 import updateClothesCast from './updateClothesCast.js'; 
+import setWindDirections from "./winddirections.js";
 // const setForecastDivs = require('./forecast.js'); 
 
 class WeatherApp {
@@ -13,7 +14,6 @@ class WeatherApp {
     this.cityInput = document.querySelector("#searchField");
     this.searchButton = document.querySelector("#search-button");
     this.measurement = 'imperial' // or 'metric'
-    
 
     this.element.addEventListener("keydown", (e) => {
       this.handleKeyDown(e);
@@ -27,10 +27,36 @@ class WeatherApp {
   async getWeather() {
     // let cityValue = this.cityInput.value;
     try {
-      // console.log(this);
+      console.log(this);
       const response = await fetch(
         `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${this.cityInput.value}?key=${process.env.API_KEY}`
       );
+
+      // set all settings to imperial
+      userInterface.metricButton.classList.remove('active'); 
+      userInterface.imperialButton.classList.add('active'); 
+      this.measurement = 'imperial';
+
+      let allMetrics = Array.from(document.querySelectorAll('.metric')); 
+      let tempMeasurements = Array.from(document.querySelectorAll('.temperature-measurement')); 
+      tempMeasurements.forEach(el => {
+        el.innerHTML = '&#8457;'  // &#8451; celsius
+        el.classList.remove('metric'); 
+        el.classList.add('imperial'); 
+      }); 
+      allMetrics.forEach(el => {
+        if (el.classList.contains('distance-unit-big')) {
+          el.innerHTML = ' mi'; 
+          el.classList.remove('metric'); 
+          el.classList.add('imperial'); 
+        }
+        if (el.classList.contains('speed')) {
+          el.innerHTML = 'mph'; 
+          el.classList.remove('metric'); 
+          el.classList.add('imperial'); 
+        }
+      }); 
+
       // console.log(response);
       if (response.status === 200) {
         let weatherData = await response.json();
@@ -72,23 +98,31 @@ class Converter {
     return ((fahrenheit - 32) * (5/9)); 
   }
 
-  // convert mph to kmh
+  // convert miles to km
   convertToKM(milesOrMPH) {
     return (milesOrMPH * 1.609344); 
   }
-  // convert kmh to mph
+  // convert km to miles
   convertToMiles(kmOrKMH) {
     return (kmOrKMH * .621371); 
   }
 
-  // convert inches to centimeters
-  convertToCM(inches) {
-    return (inches * 2.54);
+  convertToKM(milesOrMPH) {
+    return (milesOrMPH * 1.609344); 
+  }
+  // convert km to miles
+  convertToMiles(kmOrKMH) {
+    return (kmOrKMH * .621371); 
   }
 
-  // convert centimeters to inches
-  convertToInches(cm) {
-    return (cm * .393701);
+  // convert inches to millimeters
+  convertToMM(inches) {
+    return (inches * 25.4);
+  }
+
+  // convert millimeters to inches
+  convertToInches(mm) {
+    return (mm * .0393701);
   }
 }
 
@@ -106,7 +140,8 @@ class UI {
 
     [this.metricButton, this.imperialButton].forEach(button => {
       button.addEventListener('click', (e) => {
-        this.switchSettings(); 
+        console.log(e.target); 
+        this.switchSettings(e); 
       })
     })
 
@@ -143,11 +178,40 @@ class UI {
 
     for (let datapoint in data) {
         let div = this.datapointDivs.find(div => Array.from(div.classList).includes(datapoint)); 
+        // console.log(data.days[0]); 
         if (div) {
           // console.log(div); 
           div.innerHTML = data[datapoint];  
         }
-    }
+      }
+
+      let tempmax = document.querySelector('.tempmax'); 
+      let tempmin = document.querySelector('.tempmin'); 
+      tempmax.innerHTML = data.days[0].tempmax;
+      tempmin.innerHTML = data.days[0].tempmin;
+
+      if (parseInt(data.currentConditions.snowdepth)) {
+        const snowMetrics = Array.from(document.querySelectorAll('.conditional')); 
+        snowMetrics.forEach(metric => {
+          metric.classList.remove('hidden'); 
+          metric.classList.add('secondary'); 
+        })
+      } else {
+        const snowMetrics = Array.from(document.querySelectorAll('.conditional')); 
+        snowMetrics.forEach(metric => {
+          metric.classList.remove('secondary'); 
+          metric.classList.add('hidden'); 
+        })
+      }
+
+    //   for (let datapoint in data['days'][0]) {
+    //       let div = this.datapointDivs.find(div => Array.from(div.classList).includes(datapoint)); 
+    //       if (div) { 
+    //         div.innerHTML = data[datapoint];  
+    //       } 
+    // }
+  
+
 
     // UV Index
     this.UVindex.innerHTML = `<img src="../src/icons/weather/line/all/uv-index-${data.currentConditions.uvindex}.svg" class="svg-icon" alt=""></img>`; 
@@ -192,41 +256,124 @@ class UI {
 
   }
 
-  switchSettings() {
-    let active = document.querySelector('.active'); 
-
-    if (active === this.metricButton) { //switch to imperial
+  switchSettings(e) {
+    console.log(this); 
+    let activeSetting = document.querySelector('.active'); 
+    let tempMeasurements = Array.from(document.querySelectorAll('.temperature-measurement'));
+    
+      //this.app.measurement === 'metric'
+    if (activeSetting === this.metricButton && e.target.classList.contains('settings-imperial')) { //switch to imperial
       let allMetrics = Array.from(document.querySelectorAll('.metric')); 
-      let tempMeasurements = Array.from(document.querySelectorAll('.temperature-measurement'));
 
       tempMeasurements.forEach(el => {
-        el.innerHTML = '&#8457;'
+        el.innerHTML = '&#8457;'  // &#8451; celsius
+        el.classList.remove('metric'); 
+        el.classList.add('imperial'); 
       }); 
 
       allMetrics.forEach(el => {
-        if (el.classList.includes('distance')) {
-          el.innerHTML = 'mi'; 
+        if (el.classList.contains('distance-unit-big')) {
+          el.innerHTML = ' mi'; 
+          el.classList.remove('metric'); 
+          el.classList.add('imperial'); 
         }
 
-        if (el.classList.includes('speed')) {
+        if (el.classList.contains('speed')) {
           el.innerHTML = 'mph'; 
+          el.classList.remove('metric'); 
+          el.classList.add('imperial'); 
         }
+      }); 
 
         // to convert numbers, it has to have datapoint class and one of the above 2 metrics
+        // this.datapointDivs.forEach(div => {
+        //   if (div.classList.contains('distance-number-big')) {
+        //     let current = parseInt(div.innerHTML); 
+        //     div.innerHTML = converter.convertToMiles(current).toFixed(1); 
+        //   } else if (div.classList.contains('speed')) {
+        //     let current = parseInt(div.innerHTML); 
+        //     div.innerHTML = converter.convertToMiles(current).toFixed(1);
+        //   } else if (div.classList.contains('temperature-number')) {
+        //     let current = parseInt(div.innerHTML);
+        //     div.innerHTML = converter.convertToFahrenhheit(current).toFixed(1); 
+        //   }
+        // }); 
+        
+        this.clearPreviousData(); 
+        this.app.getWeather().then(() => {
+          console.log('Getting fresh weather data...'); 
+          
+          
+          // confirm changes 
+          this.metricButton.classList.remove('active'); 
+          this.imperialButton.classList.add('active'); 
+          this.app.measurement = 'imperial'; 
+        }); 
+    } else if (activeSetting === this.imperialButton && e.target.classList.contains('settings-metric')) { // switchh to metric
+      let allImperials = Array.from(document.querySelectorAll('.imperial')); 
 
+      tempMeasurements.forEach(el => {
+        el.innerHTML = '&#8451;'; 
+        el.classList.add('metric'); 
+        el.classList.remove('imperial'); 
       }); 
-    } else if (active === this.imperialButton) {
 
-    }
+      allImperials.forEach(el => {
+        if (el.classList.contains('distance-unit-big')) {
+          el.innerHTML = ' km'; 
+          el.classList.add('metric'); 
+          el.classList.remove('imperial'); 
+        }
+
+        if (el.classList.contains('speed')) {
+          el.innerHTML = 'kmh'; 
+          el.classList.add('metric'); 
+          el.classList.remove('imperial'); 
+        }
+      }); 
+
+        // to convert numbers, it has to have datapoint class and one of the above 2 metrics
+        let datapoints = Array.from(document.querySelectorAll('.datapoint')); 
+        datapoints.forEach(div => {
+          if (div.classList.contains('distance-number-big')) {
+            let current = parseInt(div.innerHTML); 
+            div.innerHTML = converter.convertToKM(current).toFixed(1); 
+          } else if (div.classList.contains('speed')) {
+            let current = parseInt(div.innerHTML); 
+            div.innerHTML = converter.convertToKM(current).toFixed(1);
+          } else if (div.classList.contains('temperature-number')) {
+            let current = parseInt(div.innerHTML);
+            if (!div.classList.contains('day-high') && !div.classList.contains('day-low')) {
+              div.innerHTML = converter.convertToC(current).toFixed(1); 
+            } else {
+              div.innerHTML = converter.convertToC(current).toFixed(0);
+            }
+          }
+        }); 
+
+          // confirm changes 
+          this.metricButton.classList.add('active'); 
+          this.imperialButton.classList.remove('active'); 
+          this.app.measurement = 'metric'; 
+    } 
+    // else {
+    //   this.dataUnavailable(); 
+    //   this.cityName.innerHTML = `Something went wrong. Search for weather data again.`;
+    // }
   }
 
-  updateUI(data) {
-    // console.log(this.datapointDivs); 
-    this.fillSecondaryDatapoints(data); 
-    this.updateMainInfo(data);  
-    this.updateTemperatureIcon(data); 
-    setForecastDivs(data, this.app); 
-    updateClothesCast(data); 
+   updateUI(data) {
+    // try {
+      // console.log(this.datapointDivs); 
+      this.fillSecondaryDatapoints(data); 
+      this.updateMainInfo(data);  
+      this.updateTemperatureIcon(data); 
+      setForecastDivs(data, this.app); 
+      updateClothesCast(data); 
+      setWindDirections(); 
+    // } catch(err) {
+    //   console.error(`Error updating UI: ${err}`); 
+    // }
     // this.app.dataContainer.insertAdjacentHTML("beforeend",`${data.resolvedAddress.toUpperCase()}: ${JSON.stringify(data.currentConditions.temp)}`);
   }
 
