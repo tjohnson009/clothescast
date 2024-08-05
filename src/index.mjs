@@ -50,6 +50,11 @@ class WeatherApp {
           el.classList.remove('metric'); 
           el.classList.add('imperial'); 
         }
+        if (el.classList.contains('distance-unit-small')) {
+          el.innerHTML = ' in'; 
+          el.classList.remove('metric'); 
+          el.classList.add('imperial'); 
+        }
         if (el.classList.contains('speed')) {
           el.innerHTML = 'mph'; 
           el.classList.remove('metric'); 
@@ -341,7 +346,7 @@ class UI {
         }
 
         if (el.classList.contains('speed')) {
-          el.innerHTML = 'kmh'; 
+          el.innerHTML = 'km/h'; 
           el.classList.add('metric'); 
           el.classList.remove('imperial'); 
         }
