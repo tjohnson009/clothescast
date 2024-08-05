@@ -116,11 +116,14 @@ class Converter {
   }
 
   // convert inches to millimeters
-  convertToMM(inches) {
-    return (inches * 25.4);
+  convertToCM(inches) {
+    return (inches * 2.54);
   }
 
   // convert millimeters to inches
+  // convertToInches(mm) {
+  //   return (mm * .0393701);
+  // }
   convertToInches(mm) {
     return (mm * .0393701);
   }
@@ -278,6 +281,12 @@ class UI {
           el.classList.add('imperial'); 
         }
 
+        if (el.classList.contains('distance-unit-small')) {
+          el.innerHTML = ' in'; 
+          el.classList.remove('metric'); 
+          el.classList.add('imperial'); 
+        }
+
         if (el.classList.contains('speed')) {
           el.innerHTML = 'mph'; 
           el.classList.remove('metric'); 
@@ -325,6 +334,12 @@ class UI {
           el.classList.remove('imperial'); 
         }
 
+        if (el.classList.contains('distance-unit-small')) {
+          el.innerHTML = ' cm'; 
+          el.classList.add('metric'); 
+          el.classList.remove('imperial'); 
+        }
+
         if (el.classList.contains('speed')) {
           el.innerHTML = 'kmh'; 
           el.classList.add('metric'); 
@@ -341,6 +356,9 @@ class UI {
           } else if (div.classList.contains('speed')) {
             let current = parseInt(div.innerHTML); 
             div.innerHTML = converter.convertToKM(current).toFixed(1);
+          } else if (div.classList.contains('distance-number-small')) {
+            let current = parseInt(div.innerHTML); 
+            div.innerHTML = converter.convertToCM(current).toFixed(1); 
           } else if (div.classList.contains('temperature-number')) {
             let current = parseInt(div.innerHTML);
             if (!div.classList.contains('day-high') && !div.classList.contains('day-low')) {
