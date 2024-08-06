@@ -451,7 +451,11 @@ class UI {
     })
 
     // clear forcast divs
-    this.forecastDiv.innerHTML = ''; 
+    // this.forecastDiv.innerHTML = ''; 
+    let days = Array.from(document.querySelectorAll('.day')); 
+    days.forEach(el => {
+      el.remove(); 
+    })
   }
 }
 
