@@ -237,10 +237,12 @@ body {
 }
 
 .forecast {
+    clear: both; 
     display: flex; 
     flex-direction: column;
     max-width: 70rem;
     margin: 0 auto; 
+    margin-top: 1rem; 
     /* border: 1px solid var(--yellow);  */
     font-size: 2.25rem;
 
