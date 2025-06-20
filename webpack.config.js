@@ -20,7 +20,9 @@ module.exports = {
         template: 'public/index.html', 
         output: 'index.html',
     }),
-    new Dotenv(),
+    new Dotenv({
+      systemvars: true,  
+    }),
     new CopyPlugin({
       patterns: [
         { from: "public", to: ".",
