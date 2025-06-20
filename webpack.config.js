@@ -18,7 +18,13 @@ module.exports = {
     new HtmlWebpackPlugin({
         template: './public/index.html',
     }),
-    new Dotenv()
+    new Dotenv(),
+    new CopyPlugin({
+      patterns: [
+        { from: "public/fonts", to: "fonts" },
+        { from: "public/icons", to: "icons" },
+      ],
+    }),
 ],
 resolve: {
   extensions: ['.js', '.mjs'],
