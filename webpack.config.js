@@ -7,6 +7,7 @@ const webpack = require('webpack');
 // import webpack from 'webpack'; 
 const HtmlWebpackPlugin = require('html-webpack-plugin'); 
 // import HtmlWebpackPlugin from 'html-webpack-plugin'; 
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './public/index.mjs', 
