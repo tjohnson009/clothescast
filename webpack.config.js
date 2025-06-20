@@ -10,14 +10,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: './public/index.mjs', 
+  entry: './public/index.mjs',
   output: {
     filename: 'main.js',  
     path: path.resolve(__dirname, './dist'),
   },
   plugins: [
     new HtmlWebpackPlugin({
-        template: './public/index.html',
+        template: 'public/index.html', 
+        output: 'index.html',
     }),
     new Dotenv(),
     new CopyPlugin({
@@ -53,5 +54,5 @@ resolve: {
         }
       ],
     },
-    watch: true
+    // watch: true
 };
