@@ -22,8 +22,10 @@ module.exports = {
     new Dotenv(),
     new CopyPlugin({
       patterns: [
-        { from: "public/fonts", to: "fonts" },
-        { from: "public/icons", to: "icons" },
+        { from: "public", to: ".",
+        globOptions: {
+        ignore: ['**/index.html'], // index.html is handled by HtmlWebpackPlugin
+      }}
       ],
     }),
 ],
