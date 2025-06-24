@@ -9,7 +9,7 @@ const updateClothesCast = (data) => {
         clothingItems[3].innerHTML = `<img src="icons/clothes/openumbrella.svg" class="svg-icon" alt=""></img>`;
         clothingItems[2].innerHTML = `<img src="icons/clothes/boots.svg" class="svg-icon" alt=""></img>`;
     } else {
-        clothingItems[3].innerHTML = ''; 
+        clothingItems[3].innerHTML = 'No umbrella needed today.'; 
     }
 
     //shoes 
