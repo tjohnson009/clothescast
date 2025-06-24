@@ -2,7 +2,7 @@ import { format } from "date-fns";
 // const datefns = require('date-fns'); 
 // import { format } from "https://unpkg.com/date-fns/format.mjs";
 // const datefns = require("date-fns"); 
-import './style.css'; 
+import './styles.css'; 
 import setForecastDivs from './forecast.js'; 
 import updateClothesCast from './updateClothesCast.js'; 
 import setWindDirections from "./winddirections.js";
@@ -223,7 +223,7 @@ class UI {
 
 
     // UV Index
-    this.UVindex.innerHTML = `<img src="/icons/weather/line/all/uv-index-${data.currentConditions.uvindex}.svg" class="svg-icon" alt=""></img>`; 
+    this.UVindex.innerHTML = `<img src="icons/weather/line/all/uv-index-${data.currentConditions.uvindex}.svg" class="svg-icon" alt=""></img>`; 
     if (data.currentConditions.uvindex === 0) {
       this.UVindex.innerHTML = 0; 
     }
@@ -233,31 +233,31 @@ class UI {
 
     if (moonPhase === 0) {
       // New moon
-      this.moonDiv.innerHTML = `<img src="/icons/weather/line/all/moon-new.svg" class="svg-icon" alt="New Moon"></img>`;
+      this.moonDiv.innerHTML = `<img src="icons/weather/line/all/moon-new.svg" class="svg-icon" alt="New Moon"></img>`;
     } else if (moonPhase > 0 && moonPhase < 0.25) {
       // Waxing crescent
-      this.moonDiv.innerHTML = `<img src="/icons/weather/line/all/moon-waxing-crescent.svg" class="svg-icon" alt="Waxing Crescent"></img>`;
+      this.moonDiv.innerHTML = `<img src="icons/weather/line/all/moon-waxing-crescent.svg" class="svg-icon" alt="Waxing Crescent"></img>`;
     } else if (moonPhase === 0.25) {
       // First quarter
-      this.moonDiv.innerHTML = `<img src="/icons/weather/line/all/moon-first-quarter.svg" class="svg-icon" alt="First Quarter"></img>`;
+      this.moonDiv.innerHTML = `<img src="icons/weather/line/all/moon-first-quarter.svg" class="svg-icon" alt="First Quarter"></img>`;
     } else if (moonPhase > 0.25 && moonPhase < 0.5) {
       // Waxing gibbous
-      this.moonDiv.innerHTML = `<img src="/icons/weather/line/all/moon-waxing-gibbous.svg" class="svg-icon" alt="Waxing Gibbous"></img>`;
+      this.moonDiv.innerHTML = `<img src="icons/weather/line/all/moon-waxing-gibbous.svg" class="svg-icon" alt="Waxing Gibbous"></img>`;
     } else if (moonPhase === 0.5) {
       // Full moon
-      this.moonDiv.innerHTML = `<img src="/icons/weather/line/all/moon-full.svg" class="svg-icon" alt="Full Moon"></img>`;
+      this.moonDiv.innerHTML = `<img src="icons/weather/line/all/moon-full.svg" class="svg-icon" alt="Full Moon"></img>`;
     } else if (moonPhase > 0.5 && moonPhase < 0.75) {
       // Waning gibbous
-      this.moonDiv.innerHTML = `<img src="/icons/weather/line/all/moon-waning-gibbous.svg" class="svg-icon" alt="Waning Gibbous"></img>`;
+      this.moonDiv.innerHTML = `<img src="icons/weather/line/all/moon-waning-gibbous.svg" class="svg-icon" alt="Waning Gibbous"></img>`;
     } else if (moonPhase === 0.75) {
       // Last quarter
-      this.moonDiv.innerHTML = `<img src="/icons/weather/line/all/moon-last-quarter.svg" class="svg-icon" alt="Last Quarter"></img>`;
+      this.moonDiv.innerHTML = `<img src="icons/weather/line/all/moon-last-quarter.svg" class="svg-icon" alt="Last Quarter"></img>`;
     } else if (moonPhase > 0.75 && moonPhase < 1) {
       // Waning crescent
-      this.moonDiv.innerHTML = `<img src="/icons/weather/line/all/moon-waning-crescent.svg" class="svg-icon" alt="Waning Crescent"></img>`;
+      this.moonDiv.innerHTML = `<img src="icons/weather/line/all/moon-waning-crescent.svg" class="svg-icon" alt="Waning Crescent"></img>`;
     } else {
       // Default full moon
-      this.moonDiv.innerHTML = `<img src="/icons/weather/line/all/moon-full.svg" class="svg-icon" alt="Default Full Moon"></img>`;
+      this.moonDiv.innerHTML = `<img src="icons/weather/line/all/moon-full.svg" class="svg-icon" alt="Default Full Moon"></img>`;
     }
     
     // Wind
@@ -437,11 +437,11 @@ class UI {
     // console.log('currentTime', currentTimeEpoch); 
     // if daytime - use daytime icons
     // if (currentTimeEpoch > data.currentConditions.sunriseEpoch || currentTimeEpoch < data.currentConditions.sunsetEpoch) { // daytime
-    let imgHTML = `<img id="temp-icon" src="/icons/weather/line/all/${data.currentConditions.icon}.svg" class="svg-icon" alt=""></img>`; 
+    let imgHTML = `<img id="temp-icon" src="icons/weather/line/all/${data.currentConditions.icon}.svg" class="svg-icon" alt=""></img>`; 
       // console.log(this.tempIcon.src); 
       //nighttime
     // } else {
-      // this.tempIcon.src = `/icons/weather/line/all/clear-day.svg`; 
+      // this.tempIcon.src = `icons/weather/line/all/clear-day.svg`; 
     // }
     this.tempIconDiv.insertAdjacentHTML('beforeend', imgHTML); 
   }

@@ -7,7 +7,7 @@ const setWindDirections = () => {
     windDirectionElements.forEach(el => {
         let degrees = parseInt(el.innerHTML);  
         el.innerHTML = ''; 
-        el.insertAdjacentHTML('beforeend', `<img class='svg-icon-small' src='/icons/arrow2.svg'>`); 
+        el.insertAdjacentHTML('beforeend', `<img class='svg-icon-small' src='icons/arrow2.svg'>`); 
         let img = el.querySelector('img'); 
         img.style.transform = `rotate(${degrees + 180}deg)`; 
         

@@ -35,7 +35,7 @@
 
 body {
     /* background-color: var(--white); */
-    background: linear-gradient(var(--lightblue), var(--green));
+    background: linear-gradient(var(--blue), var(--green));
     /* background-attachment: fixed; */
 }
 
@@ -45,7 +45,7 @@ body {
     /* background-color: var(--lightblue); */
     background-color: rgba(155, 185, 197, .3);
     /* opacity: .7;  */
-    max-width: 1000px; 
+    max-width: 1200px; 
     margin: 0 auto; 
     /* height: 100vh;  */
     padding: 2rem 0;
@@ -332,3 +332,19 @@ body {
     vertical-align: bottom;
 }
 
+@media screen and (max-width: 480px) {
+    .searchDiv {
+        max-width: 75%;
+
+    }
+
+    .fahrenheit-celsius-buttons {
+        display: flex; 
+        justify-content: center;
+        position: static; 
+        top: unset; 
+        right: unset; 
+    }
+
+
+}
