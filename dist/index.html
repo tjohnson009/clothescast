@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <title>ClothesCast</title>
+<script defer src="main.js"></script></head>
+
+<body>
+    <div id='container' class="container">
+        <div class="searchDiv">
+            <input id='searchField' type="text" placeholder='Search for "city", "city, state" or "country"'>
+            <button id='search-button' type="submit"></button>
+        </div>
+        <div id="data-container">
+            <div class="fahrenheit-celsius-buttons">
+                <button class="settings-metric">°C, m/s</button>
+                <button class="settings-imperial active">°F, mph</button>
+            </div>
+            <div class="city-info">
+                <div class="city-name resolvedAddress datapoint">
+
+                </div>
+                <div class="city-datetime">
+                    <!-- <div id='city-date' class="city-date datapoint"></div>
+                    <div id='city-time' class="city-time datapoint"></div> -->
+                        <span id='city-date' class="city-date datapoint"></span>
+                        <span id='city-time' class="city-time datapoint"></span>
+                </div>
+            </div>
+            <div class="main-info">
+                <div class="temperature">
+                    <div class="datapoint conditions">
+
+                    </div>
+                    <div class="temp-icon datapoint">
+                    </div>
+                    <div class="temp-num">
+                        <span class="temp datapoint temperature-number"></span>
+                        <span class="imperial temperature-measurement">&#8457;</span>
+                    </div>
+                        <div class="temp-descriptions datapoint description">
+
+                        </div>
+                </div>
+                <div class="clothing">
+                    <div class="clothing-item shirt datapoint">
+                        <!-- <img src="icons/clothes/heavycoat.svg" class='svg-icon' alt=""> -->
+                        </div>
+                    <div class="clothing-item shorts datapoint">
+                        <!-- <img src="icons/clothes/pants.svg" class='svg-icon' alt=""> -->
+                    </div>
+                    <div class="clothing-item shoes datapoint">
+                        <!-- <img src="icons/clothes/sneakers.svg" class='svg-icon' alt=""> -->
+                        </div>
+                    <div class="clothing-item umbrella datapoint">
+                        <!-- <img src="icons/clothes/openumbrella.svg" class='svg-icon' alt=""> -->
+                        </div>
+                </div>
+            </div>
+            <div class="secondary-info">
+                <div class="secondary">
+                    <p class="secondary-title">Feels Like</p>
+                    <p>
+                        <span class='feelslike temperature-number datapoint'></span> <span class="imperial temperature-measurement">&#8457;</span>
+                    </p>
+                </div>
+                <div class="secondary">
+                    <p class="secondary-title">Temp High</p>
+                    <p>
+                        <span class='tempmax temperature-number datapoint'></span> <span class="imperial temperature-measurement">&#8457;</span>
+                    </p>
+                </div>
+                <div class="secondary">
+                    <p class="secondary-title">Temp Low</p>
+                    <p>
+                        <span class='tempmin temperature-number datapoint'></span> <span class="imperial temperature-measurement">&#8457;</span>
+                    </p>
+                </div>
+                <!-- <div class="secondary metric hidden">
+                    <span class='feelslike datapoint'></span>
+                    &#8457;
+                </div> -->
+                <div class="secondary wind">
+                    <p class="secondary-title">Wind</p>
+                    <p class="">
+                        <span class="datapoint winddir"></span>
+                        <span class="datapoint speed windspeed"></span><span class="imperial speed">mph</span>
+                    </p>
+                </div>
+                <div class="secondary">
+                    <p class="secondary-title">Moon</p>
+                    <p class="datapoint moonphase"></p>
+                </div>
+                <div class="secondary">
+                    <p class="secondary-title">UV Index</p>
+                    <p class="datapoint uvindex"></p>
+                </div>
+                <div class="secondary">
+                    <p class="secondary-title">Relative Humidity</p>
+                    <p class="datapoint-p">
+                        <span class="humidity datapoint"></span><span class="">%</span>
+                    </p>
+                </div>
+                <div class="secondary">
+                    <p class="secondary-title">Rain</p>
+                    <p class="datapoint-p">
+                        <span class="datapoint precip distance-number-small"></span><span class="imperial distance-unit-small"> in</span>
+                    </p>
+                </div>
+                <div class="secondary">
+                    <p class="secondary-title">Probability of Rain</p>
+                    <p class="datapoint-p">
+                        <span class="datapoint precipprob"></span><span class="">%</span>
+                    </p>
+                </div>
+                <div class="secondary">
+                    <p class="secondary-title">Cloud Coverage</p>
+                    <p class="datapoint-p">
+                        <span class="datapoint cloudcover"></span><span class="">%</span></p>
+                </div>
+                <div class="secondary">
+                    <p class="secondary-title">Visibility</p>
+                    <p class="datapoint-p">
+                        <span class="datapoint visibility distance-number-big"></span> <span class="imperial distance-unit-big"> mi</span></p>
+                </div>
+                <div class="secondary">
+                    <p class="secondary-title">Pressure</p>
+                    <p >
+                        <span class="datapoint pressure"></span><span class="">mb</span></p>
+                </div>
+                <div class="secondary">
+                    <p class="secondary-title">Longitude</p>
+                    <p class="datapoint longitude"></p>
+                </div>
+                <div class="secondary">
+                    <p class="secondary-title">Latitude</p>
+                    <p class="datapoint latitude"></p>
+                </div>
+                    <div class="secondary conditional hidden">
+                        <p class="secondary-title">Snowfall</p>
+                        <p class="datapoint-p">
+                            <span class="datapoint snow distance-number-small"></span><span class="imperial distance-unit-small"> in</span>
+                        </p>
+                    </div>
+                    <div class="secondary conditional hidden">
+                        <p class="secondary-title">Snow Depth</p>
+                        <p class="datapoint-p snowdepth">
+                            <span class="datapoint snowdepth distance-number-small"></span><span class="imperial distance-unit-small"> in</span>
+                        </p>
+                    </div>
+
+
+            </div>
+            <div class="forecast">
+                <div class='forecast-title'>15 Day Forecast</div>
+                <!-- <div class="day">
+                    <div class="day-date"></div>
+                    <div class="day-high"></div>
+                    <div class="day-low"></div>
+                    <div class="day-icon"></div>
+                    <div class="day-wind"></div>
+                </div> -->
+            </div>
+            <!-- <div class="news">
+
+            </div> -->
+        </div>
+    </div>
+    <script src="index.mjs"></script>
+</body>
+
+</html>
