@@ -29,7 +29,7 @@
 
         .svg-icon {
             aspect-ratio: 1;
-            height: 15rem; 
+            /* height: 15rem;  */
         }
 }
 
@@ -40,7 +40,7 @@ body {
 }
 
 #container {
-    border: 1px solid red; 
+    /* border: 1px solid red;  */
     /* background-color: var(--green); */
     /* background-color: var(--lightblue); */
     background-color: rgba(155, 185, 197, .3);
@@ -208,26 +208,30 @@ body {
         text-align: center;
         justify-self: center;
     }
+
+    .svg-icon {
+        aspect-ratio: 1; 
+        height: 10rem;
+    }
 }
 
 .secondary-info {
         /* border: 1px solid red;  */
         display: grid; 
         grid-template-columns: repeat(4, 1fr); 
-        aspect-ratio: 1/.5; 
-        /* max-height: 500px;  */
         font-size: 3rem; 
+        max-width: 100%; 
 
         .secondary {
+            /* display: grid;  */
             display: flex;
-            justify-content: center;
+            flex-direction: column; 
+            /* justify-content: center; */
             align-items: center;
-            width: 100%; 
-            height: 100%; 
-            border: 1px solid var(--blue); 
-            aspect-ratio: 1;
-            display: grid; 
-            grid-template-rows: 1fr 3fr;
+            max-width: 100%; 
+            /* border: 1px solid var(--blue);  */
+            /* aspect-ratio: 1; */
+            /* grid-template-rows: 1fr 3fr; */
             
             p {
                 text-align: center; 
@@ -239,6 +243,7 @@ body {
                 display: flex;
                 justify-content: center; 
                 font-weight: 700;
+                text-decoration: underline; 
             }
         }
 }
@@ -374,9 +379,9 @@ body {
      }
     }
 
-    .svg-icon {
+    /* .svg-icon {
         width: 12rem;
-    }
+    } */
 
     .clothing {
         width: 75%; 
@@ -388,8 +393,25 @@ body {
     border: 1px solid green;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    aspect-ratio: 1 / .5;
     font-size: 2rem;
+}
+
+.secondary {
+    font-size: 2rem;
+    
+    .svg-icon {
+        height: 7rem; 
+    }
+}
+
+.forecast {
+    & .day {
+        & .day-icon {
+            .svg-icon-small {
+                height: 3rem;
+            }
+        }
+    }
 }
 
 

@@ -12,8 +12,8 @@ let setForecastDivs = async (data, app) => {
       let html = `<div class="day">
       <div class="day-date">${format(parseISO(day.datetime), 'EEEE (do)')}</div>
       <div class="day-icon"><img class='svg-icon-small' src='icons/weather/line/all/${day.icon}.svg'></div>
-      <div class="day-high temperature-number datapoint ${app.measurement}">${day.tempmax}</div>
-      <div class="day-low temperature-number datapoint ${app.measurement}">${day.tempmin}</div> 
+      <div class="day-high temperature-number datapoint ${app.measurement}">${Number.parseInt(day.tempmax).toFixed()}</div>
+      <div class="day-low temperature-number datapoint ${app.measurement}">${Number.parseInt(day.tempmin).toFixed()}</div> 
       <div class="day-wind">
       <span class='day-winddir winddir'>${day.winddir}</span><span><span class='day-windspeed speed datapoint'>${day.windspeed}</span><span class="${app.measurement} speed">${app.measurement === 'metric' ? 'kmh' : 'mph'}</span></span>
       </div>
