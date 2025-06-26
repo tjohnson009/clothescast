@@ -463,7 +463,49 @@ class UI {
 const app = new WeatherApp(document.querySelector("#container"));
 const userInterface = new UI(app);
 const converter = new Converter(); 
-app.cityInput.value = 'Saint Cloud, FL'; 
-app.getWeather(); 
+// app.cityInput.value = 'Saint Cloud, FL'; 
+// app.getWeather(); 
 // userInterface.updateMainInfo(app.getWeather()); 
 // userInterface.updateMainInfo(); 
+
+async function getLocationName(lat, lon) {
+  const response = await fetch(
+    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+  );
+  const data = await response.json();
+
+  if (!data || !data.display_name) {
+    throw new Error("Location not found");
+  }
+  console.log(data); 
+  return `${data.address.county}, ${data.address.state}, ${data.address.country}`;
+}
+
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      // Set the input to "lat,lon" (if your API accepts this format)
+      // app.cityInput.value = `${lat.toFixed(4)},${lon.toFixed(4)}`;
+      app.cityInput.value = `${lat.toFixed(4)},${lon.toFixed(4)}`;
+      await app.getWeather();
+      userInterface.cityName.innerHTML = 'Getting your location...';
+      userInterface.searchField.value = 'Getting your location...';
+      // if the user allows the geolocation, this will rename the location to where they are
+      const locationName = await getLocationName(lat, lon);
+      userInterface.cityName.innerHTML = locationName;
+      userInterface.searchField.value = locationName;
+    },
+    (error) => {
+      console.error("Geolocation error:", error);
+      // If user denies or there's an error, fallback to default
+      app.cityInput.value = 'Washington, DC';
+      app.getWeather();
+    }
+  );
+} else {
+  // Geolocation not supported, fallback to default
+  app.cityInput.value = 'Washington, DC';
+  app.getWeather();
+}
