@@ -30,7 +30,7 @@
 
 .svg-icon {
             aspect-ratio: 1;
-            /* height: 15rem;  */
+            width: 15rem; 
         }
 
 body {
@@ -521,7 +521,7 @@ body {
     & .day {
         & .day-icon {
             .svg-icon-small {
-                width: 3rem;
+                width: 5rem;
             }
         }
     }
