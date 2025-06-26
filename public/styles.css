@@ -206,13 +206,14 @@ body {
 
     .svg-icon {
         aspect-ratio: 1; 
-        height: 90%;
+        width: 90%;
     }
     }
 
     .umbrella {
         text-align: center;
         justify-self: center;
+             font-size: 2rem;
     }
 
 }
@@ -223,6 +224,7 @@ body {
         grid-template-columns: repeat(4, 1fr); 
         font-size: 3rem; 
         max-width: 100%; 
+        row-gap: 1rem;
 
         .secondary {
             /* display: grid;  */
@@ -277,7 +279,6 @@ body {
 
     .day {
         display: flex; 
-        align-content: center;
         align-items: center;
         margin-top: 1.5rem;
         padding-bottom: 1.5rem;
@@ -285,7 +286,7 @@ body {
         border-radius: .5rem;
 
         .day-date {
-            flex: 1.5;
+            flex: 2;
         }
 
         .day-icon {
@@ -352,7 +353,6 @@ body {
 @media screen and (max-width: 480px) {
     .searchDiv {
         max-width: 75%;
-
     }
 
     .fahrenheit-celsius-buttons {
@@ -390,6 +390,112 @@ body {
         justify-self: center;
         justify-content: center;
         row-gap: 0; 
+
+        .clothing-item {
+            .svg-icon {
+                width: 90%; 
+            }
+        }
+
+        .umbrella {
+             font-size: 2rem;
+        }
+    }
+
+    .secondary-info {
+    /* border: 1px solid green; */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    font-size: 2rem;
+}
+
+.secondary {
+    font-size: 2rem;
+    
+    .svg-icon {
+        width: 7rem; 
+    }
+}
+
+.forecast {
+    & .day {
+        & .day-icon {
+            .svg-icon-small {
+                width: 3rem;
+            }
+        }
+    }
+}
+.forecast {
+    .day {
+        font-size: 2rem; 
+    }
+}
+
+.winddir img {
+    height: 3rem; 
+}
+
+
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+#temp-icon {
+    width: 15rem; 
+    justify-content: right;
+}
+/*  */
+    /*  */
+    .searchDiv {
+        max-width: 75%;
+
+    }
+
+    .fahrenheit-celsius-buttons {
+        display: flex; 
+        justify-content: center;
+        position: static; 
+        top: unset; 
+        right: unset; 
+    }
+
+    .city-info {
+        /* display: block;  */
+        text-align: center; 
+    }
+
+    .main-info {
+        display: block; 
+
+        /* .svg-icon {
+            height: 10rem; 
+        } */
+    }
+
+    .temperature {
+        grid-template: .25fr 1fr .55fr / .7fr 1fr;
+        justify-content: center;
+
+     .temp-descriptions {
+        font-size: 2.5rem;
+     }
+    }
+
+    .clothing {
+        width: 75%; 
+        justify-self: center;
+        justify-content: center;
+        row-gap: 0; 
+
+        .clothing-item {
+            .svg-icon {
+                width: 90%; 
+            }
+        }
+
+        .umbrella {
+             font-size: 2rem;
+        }
     }
 
     .secondary-info {
@@ -411,11 +517,26 @@ body {
     & .day {
         & .day-icon {
             .svg-icon-small {
-                height: 3rem;
+                width: 3rem;
             }
         }
     }
 }
+.forecast {
+    .day {
+        font-size: 2rem; 
+    }
+}
+
+.winddir img {
+    height: 3rem; 
+}
+
+.temp-num {
+    justify-content: left;
+}
+
+
 
 
 }
