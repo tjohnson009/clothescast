@@ -197,6 +197,9 @@ body {
     grid-template: 1fr 1fr /  1fr 1fr; 
     row-gap: 2rem; 
     grid-column: 2/3; 
+    justify-items: center;
+    align-items: center; 
+    margin: 0 auto; 
 
     .clothing-item {
         display: flex; 
@@ -387,6 +390,7 @@ body {
 
     .clothing {
         width: 75%; 
+        margin: 0 auto;
         justify-self: center;
         justify-content: center;
         row-gap: 0; 
